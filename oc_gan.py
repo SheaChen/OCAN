@@ -48,6 +48,7 @@ Z_dim = G_dim[0]
 
 
 # define placeholders for labeled-data, unlabeled-data, noise-data and target-data.
+#定义标记数据、未标记数据、噪声数据和目标数据的占位符。
 
 X_oc = tf.placeholder(tf.float32, shape=[None, dim_input])
 Z = tf.placeholder(tf.float32, shape=[None, Z_dim])
@@ -56,6 +57,7 @@ X_tar = tf.placeholder(tf.float32, shape=[None, dim_input])
 
 
 # declare weights and biases of discriminator.
+#鉴别器的weights and biases
 
 D_W1 = tf.Variable(xavier_init([D_dim[0], D_dim[1]]))
 D_b1 = tf.Variable(tf.zeros(shape=[D_dim[1]]))
@@ -110,7 +112,7 @@ def discriminator(x):
 
 
 # pre-train net for density estimation.
-
+#预训练
 def discriminator_tar(x):
     T_h1 = tf.nn.relu(tf.matmul(x, T_W1) + T_b1)
     T_h2 = tf.nn.relu(tf.matmul(T_h1, T_W2) + T_b2)
