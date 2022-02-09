@@ -98,7 +98,7 @@ theta_T = [T_W1, T_W2, T_W3, T_b1, T_b2, T_b3]
 
 
 def generator(z):
-    G_h1 = tf.nn.relu(tf.matmul(z, G_W1) + G_b1)
+    G_h1 = tf.nn.relu(tf.matmul(z, G_W1) + G_b1)             #tf.nn.relu：将输入小于0的值幅值为0，输入大于0的值不变。tf.matmul：将矩阵 z乘以矩阵 G_W1,生成z* G_W1
     G_logit = tf.nn.tanh(tf.matmul(G_h1, G_W2) + G_b2)
     return G_logit
 
