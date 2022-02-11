@@ -107,7 +107,7 @@ def discriminator(x):
     D_h1 = tf.nn.relu(tf.matmul(x, D_W1) + D_b1)
     D_h2 = tf.nn.relu(tf.matmul(D_h1, D_W2) + D_b2)
     D_logit = tf.matmul(D_h2, D_W3) + D_b3
-    D_prob = tf.nn.softmax(D_logit)
+    D_prob = tf.nn.softmax(D_logit)                          #Softmax简单的说就是把一个N*1的向量归一化为（0，1）之间的值，由于其中采用指数运算，使得向量中数值较大的量特征更加明显。
     return D_prob, D_logit, D_h2
 
 
