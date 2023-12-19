@@ -48,6 +48,7 @@ Z_dim = G_dim[0]
 
 
 # define placeholders for labeled-data, unlabeled-data, noise-data and target-data.
+#定义标记数据、未标记数据、噪声数据和目标数据的占位符。
 
 X_oc = tf.placeholder(tf.float32, shape=[None, dim_input])
 Z = tf.placeholder(tf.float32, shape=[None, Z_dim])
@@ -56,6 +57,7 @@ X_tar = tf.placeholder(tf.float32, shape=[None, dim_input])
 
 
 # declare weights and biases of discriminator.
+#鉴别器的weights and biases
 
 D_W1 = tf.Variable(xavier_init([D_dim[0], D_dim[1]]))
 D_b1 = tf.Variable(tf.zeros(shape=[D_dim[1]]))
@@ -96,7 +98,7 @@ theta_T = [T_W1, T_W2, T_W3, T_b1, T_b2, T_b3]
 
 
 def generator(z):
-    G_h1 = tf.nn.relu(tf.matmul(z, G_W1) + G_b1)
+    G_h1 = tf.nn.relu(tf.matmul(z, G_W1) + G_b1)             #tf.nn.relu：将输入小于0的值幅值为0，输入大于0的值不变。tf.matmul：将矩阵 z乘以矩阵 G_W1,生成z* G_W1
     G_logit = tf.nn.tanh(tf.matmul(G_h1, G_W2) + G_b2)
     return G_logit
 
@@ -105,12 +107,12 @@ def discriminator(x):
     D_h1 = tf.nn.relu(tf.matmul(x, D_W1) + D_b1)
     D_h2 = tf.nn.relu(tf.matmul(D_h1, D_W2) + D_b2)
     D_logit = tf.matmul(D_h2, D_W3) + D_b3
-    D_prob = tf.nn.softmax(D_logit)
+    D_prob = tf.nn.softmax(D_logit)                          #Softmax简单的说就是把一个N*1的向量归一化为（0，1）之间的值，由于其中采用指数运算，使得向量中数值较大的量特征更加明显。
     return D_prob, D_logit, D_h2
 
 
 # pre-train net for density estimation.
-
+#预训练
 def discriminator_tar(x):
     T_h1 = tf.nn.relu(tf.matmul(x, T_W1) + T_b1)
     T_h2 = tf.nn.relu(tf.matmul(T_h1, T_W2) + T_b2)
